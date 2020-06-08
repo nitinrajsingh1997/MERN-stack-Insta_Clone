@@ -4,9 +4,20 @@ const mongoose = require('mongoose');
 const User = mongoose.model("User");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const {JWT_KEY} = require('../config/keys');
 const requireLogin = require('../middleware/requireLogin');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+// 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
 
+
+
+const mailer = nodemailer.createTransport(sendgridTransport({
+    auth : {
+        api_key: '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'
+    }
+}));
 
 router.post('/signup', (req, res) => {
     const {name, email, password, pic} = req.body;
@@ -28,6 +39,13 @@ router.post('/signup', (req, res) => {
             })
             user.save()
              .then(user => {
+                 mailer.sendMail({
+                     to: user.email,
+                     from: "ns3320517@gmail.com",
+                     subject: "Account created scuccessfully",
+                     html: "<h1>Welcome to Picstagram</h1>"
+                 })
+                 console.log(sent)
                  res.json({message: "saved successfully"})
              })
              .catch(err => {
@@ -64,6 +82,35 @@ router.post('/signin', (req, res) => {
         })
         .catch(err => {
             console.log(err)
+        })
+    })
+})
+
+router.post('/reset-password', (req, res) => {
+    crypto.randomBytes(32, (err, buffer) => {
+        if(err){
+            console.log(err);
+        }
+        const token = buffer.toString("hex");
+        User.findOne({email: req.body.email})
+        .then(user => {
+            if(!user){
+                return res.status(422).json({error: "User doesn't exixts with the email"})
+            }
+            user.resetToken = token;
+            user.expireToken = Date.now() + 3600000;
+            user.save().then((result) => {
+                mailer.sendMail({
+                    to: user.email,
+                    from: "ns3320517@gmail.com",
+                    subject: "Password reset",
+                    html: `
+                    <p>You requested to reset password</p>
+                    <h5>Click on this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
+                    `
+                })
+                res.json({message: "Check you email"});
+            })
         })
     })
 })

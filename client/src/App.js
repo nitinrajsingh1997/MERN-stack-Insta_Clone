@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Signup from './components/Signup';
 import CreatePost from './components/CreatePost';
 import UserProfile from './components/UserProfile';
+import Reset from './components/Reset';
 import {reducer, intialState} from './reducers/userReducer';
 
 export const UserContext = createContext();
@@ -19,10 +20,10 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if(user){
       dispatch({type:"USER", payload:user});
-      //history.push('/')
     }
     else{
-      history.push('/login')
+      if(!history.location.pathname.startsWith('/reset'))
+          history.push('/login')
     }
   }, [])
   return (
@@ -33,6 +34,7 @@ const Routing = () => {
     <Route exact path="/profile"><Profile /></Route>
     <Route path="/create"><CreatePost /></Route>
     <Route path="/profile/:userid"><UserProfile /></Route>
+    <Route path="/reset"><Reset /></Route>
     </Switch>
   )
 }
