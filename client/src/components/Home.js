@@ -12,7 +12,7 @@ const Home = () => {
             }
         }).then(res=> res.json())
         .then(result => {
-            console.log(result)
+            //console.log(result)
             setData(result.posts)
         })
     }, [])
@@ -120,7 +120,7 @@ const Home = () => {
                 data.map(item => {
                     return (
                         <div className="card home-card" key={item._id}>
-                            <h5><Link to={item.postedBy._id !== state._id ? '/profile/' + item.postedBy._id : '/profile'}>{item.postedBy.name}</Link> 
+                            <h5><Link to={item.postedBy._id !== state._id ? '/profile/' + item.postedBy._id : '/profile'}><span className="username">{item.postedBy.name}</span></Link> 
                             {
                                 item.postedBy._id === state._id && <i className="material-icons" style={{float:"right"}}
                                 onClick={()=> deletePost(item._id)}
@@ -131,7 +131,6 @@ const Home = () => {
                                 <img src={item.picture} />
                             </div>
                             <div className="card-content">
-                                <i className="material-icons">favorite</i>
                                 {item.likes.includes(state._id) ? 
                                   <i className="material-icons" onClick={()=>{unlikePost(item._id)}}>thumb_down</i> :
                                   <i className="material-icons" onClick={()=>{likePost(item._id)}}>thumb_up</i>
@@ -143,7 +142,7 @@ const Home = () => {
                                 {
                                     item.comments.map(record => {
                                         return (
-                                            <h6 key={record._id}><span style={{fontWeight:"500"}}>{record.postedBy.name}</span> {record.text}</h6>
+                                            <h6 key={record._id}><span style={{fontWeight:"500"}}></span> {record.text}</h6>
                                         )
                                     })
                                 }

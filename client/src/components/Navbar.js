@@ -8,10 +8,10 @@ const Navbar = () => {
   const renderList = () => {
     if(state){
       return [
-        <li><Link to="/profile">Profile</Link></li>,
-        <li><Link to="/create">Create</Link></li>,
-        <li>
-          <button class="btn waves-effect waves-light #f50057 pink accent-3" onClick={()=>{
+        <li className="navbar-items" key="1"><Link to="/profile">Profile</Link></li>,
+        <li key="2"><Link to="/create">Create</Link></li>,
+        <li key="3">
+          <button className="logout btn waves-effect waves-light #f50057 pink accent-3" onClick={()=>{
             localStorage.clear()
             dispatch({type:"CLEAR"})
             history.push('/login')
@@ -23,21 +23,18 @@ const Navbar = () => {
     }
     else{
       return [
-        <li><Link to="/login">Login</Link></li>,
-        <li><Link to="/signup">Signup</Link></li>
+        <li key="4"><Link to="/login">Login</Link></li>,
+        <li key="5"><Link to="/signup">Signup</Link></li>
       ]
     }
   }
+
     return(
       <div className="navbar-fixed" >
         <nav>
             <div className="nav-wrapper white">
               <Link to={state ? "/": "/login"} className="brand-logo left">Picstagram</Link>
-              <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i class="material-icons">menu</i></a>
-              <ul className="right hide-on-med-and-down">
-
-              </ul>
-              <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <ul id="nav-mobile" className="right">
                 {renderList()}
               </ul>
             </div>

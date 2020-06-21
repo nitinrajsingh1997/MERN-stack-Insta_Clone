@@ -8,6 +8,11 @@ a{
   font-family: 'Grand Hotel', cursive;
 }
 
+.brand-logo{
+  margin-left: 20px;
+}
+
+
 
 .auth-card{
   padding: 20px;
@@ -31,6 +36,8 @@ a{
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+
 .item{
   width: 30%;
 }
@@ -46,4 +53,20 @@ a{
   top:30px !important;
   right: 20px !important;
   left: auto !important;
+}
+
+.material-icons:hover{
+  cursor: pointer;
+}
+
+
+
+
+@media only screen and (min-width: 300px){
+  .logout{
+    margin-right: 5px;
+  }
+  .navbar-items{
+    margin-right: -10px;
+  }
 }

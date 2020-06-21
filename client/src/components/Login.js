@@ -27,7 +27,7 @@ const Login = () => {
             
         }).then(res=>res.json())
         .then(data => {
-            console.log(data)
+           // console.log(data)
             if(data.error){
                 M.toast({html: data.error, classes: "#f44336 red"});
             }
@@ -45,7 +45,7 @@ const Login = () => {
     return (
         <div className="login-card">
             <div className="card auth-card input-field">
-                <h2>Instagram</h2>
+                <h2>Picstagram</h2>
                 <input type="text" placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
                 <input type="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
                 <button class="btn waves-effect waves-light #f50057 pink accent-3" onClick={()=>SendUserData()}>Login

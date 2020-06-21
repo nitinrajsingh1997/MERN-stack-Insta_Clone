@@ -45,7 +45,6 @@ router.post('/signup', (req, res) => {
                      subject: "Account created scuccessfully",
                      html: "<h1>Welcome to Picstagram</h1>"
                  })
-                 console.log(sent)
                  res.json({message: "saved successfully"})
              })
              .catch(err => {
@@ -99,14 +98,14 @@ router.post('/reset-password', (req, res) => {
             }
             user.resetToken = token;
             user.expireToken = Date.now() + 3600000;
-            user.save().then((result) => {
+            user.save().then((result) => {  
                 mailer.sendMail({
                     to: user.email,
                     from: "ns3320517@gmail.com",
                     subject: "Password reset",
                     html: `
                     <p>You requested to reset password</p>
-                    <h5>Click on this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
+                    <h5>Click on this <a href="http://localhost:3000/new-password/${token}">link</a> to reset password</h5>
                     `
                 })
                 res.json({message: "Check you email"});

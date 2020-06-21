@@ -10,6 +10,7 @@ import CreatePost from './components/CreatePost';
 import UserProfile from './components/UserProfile';
 import Reset from './components/Reset';
 import {reducer, intialState} from './reducers/userReducer';
+import NewPassword from './components/NewPassword';
 
 export const UserContext = createContext();
 
@@ -35,6 +36,7 @@ const Routing = () => {
     <Route path="/create"><CreatePost /></Route>
     <Route path="/profile/:userid"><UserProfile /></Route>
     <Route path="/reset"><Reset /></Route>
+    <Route path="/new-password/:token"><NewPassword /></Route>
     </Switch>
   )
 }
